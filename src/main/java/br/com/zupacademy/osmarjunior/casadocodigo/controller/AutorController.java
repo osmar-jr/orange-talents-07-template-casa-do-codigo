@@ -4,7 +4,10 @@ import br.com.zupacademy.osmarjunior.casadocodigo.dto.AutorDto;
 import br.com.zupacademy.osmarjunior.casadocodigo.form.AutorFormRequest;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Autor;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.AutorRepository;
+import br.com.zupacademy.osmarjunior.casadocodigo.validation.NaoPermiteEmailDuplicadoValidator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -14,10 +17,15 @@ import javax.validation.Valid;
 @RequestMapping("/autores")
 public class AutorController {
 
+    @Autowired
     private AutorRepository autorRepository;
 
-    public AutorController(AutorRepository autorRepository) {
-        this.autorRepository = autorRepository;
+    @Autowired
+    private NaoPermiteEmailDuplicadoValidator naoPermiteEmailDuplicadoValidator;
+
+    @InitBinder
+    public void init(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(naoPermiteEmailDuplicadoValidator);
     }
 
     @PostMapping

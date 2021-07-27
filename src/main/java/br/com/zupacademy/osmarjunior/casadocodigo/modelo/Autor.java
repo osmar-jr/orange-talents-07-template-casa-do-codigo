@@ -1,10 +1,7 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.modelo;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -21,6 +18,7 @@ public class Autor {
     private String nome;
 
     @NotNull @NotEmpty @NotBlank @Email
+    @Column(unique = true)
     private String email;
 
     @NotNull @NotEmpty @NotBlank @Length(max = 400)
@@ -29,6 +27,7 @@ public class Autor {
     @NotNull
     private LocalDateTime criadoEm;
 
+    @Deprecated
     public Autor() {
     }
 

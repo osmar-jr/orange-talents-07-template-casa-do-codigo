@@ -22,6 +22,15 @@ public class AutorFormRequest {
     @Length(max = 400)
     private String descricao;
 
+    public AutorFormRequest(@NotBlank String nome,
+                            @NotBlank @Email String email,
+                            @NotBlank @Length(max = 400) String descricao) {
+        super();
+        this.nome = nome;
+        this.email = email;
+        this.descricao = descricao;
+    }
+
     public Autor converterToModel() {
         return new Autor(nome, email, descricao);
     }
