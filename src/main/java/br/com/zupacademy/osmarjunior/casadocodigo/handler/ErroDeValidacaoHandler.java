@@ -1,11 +1,14 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.handler;
 
 import br.com.zupacademy.osmarjunior.casadocodigo.dto.SaidaDeErroDeCampoDto;
+import br.com.zupacademy.osmarjunior.casadocodigo.dto.SaidaDeErrosDeValidacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -23,16 +26,41 @@ public class ErroDeValidacaoHandler {
 
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public List<SaidaDeErroDeCampoDto> handle(MethodArgumentNotValidException exception) {
-        List<SaidaDeErroDeCampoDto> erroDeCampoDtos = new ArrayList<>();
-
+    public SaidaDeErrosDeValidacaoDto handleValidationError(MethodArgumentNotValidException exception) {
+        List<ObjectError> objectErrors = exception.getBindingResult().getGlobalErrors();
         List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
-        fieldErrors.forEach(e -> {
-            String mensagem = messageSource.getMessage(e, LocaleContextHolder.getLocale());
-            SaidaDeErroDeCampoDto erro = new SaidaDeErroDeCampoDto(e.getField(), mensagem);
-            erroDeCampoDtos.add(erro);
+
+        return getSaidaDeErrosDeValidacaoDto(objectErrors, fieldErrors);
+    }
+
+    @ResponseStatus(code = HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BindException.class)
+    public SaidaDeErrosDeValidacaoDto handleValidationError(BindException exception) {
+
+        List<ObjectError> objectErrors = exception.getBindingResult().getGlobalErrors();
+        List<FieldError> fieldErrors = exception.getBindingResult().getFieldErrors();
+
+        return getSaidaDeErrosDeValidacaoDto(objectErrors, fieldErrors);
+    }
+
+    private SaidaDeErrosDeValidacaoDto getSaidaDeErrosDeValidacaoDto(List<ObjectError> objectErrors,
+                                                                     List<FieldError> fieldErrors){
+        SaidaDeErrosDeValidacaoDto errosDeValidacaoDto = new SaidaDeErrosDeValidacaoDto();
+
+        objectErrors.forEach(objectError -> errosDeValidacaoDto.adicionarErro(
+                getMensagemDeErro(objectError)
+        ));
+
+        fieldErrors.forEach(fieldError -> {
+            String mensagemDeErro = getMensagemDeErro(fieldError);
+            errosDeValidacaoDto.adicionarCampoDeErro(fieldError.getField(), mensagemDeErro);
         });
 
-        return erroDeCampoDtos;
+        return errosDeValidacaoDto;
+
+    }
+
+    private String getMensagemDeErro(ObjectError objectError){
+        return messageSource.getMessage(objectError, LocaleContextHolder.getLocale());
     }
 }

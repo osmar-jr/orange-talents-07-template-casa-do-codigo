@@ -1,30 +1,29 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.form;
 
+import br.com.zupacademy.osmarjunior.casadocodigo.constraint.UniqueValue;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Autor;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.validation.annotation.Validated;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-@Validated
 public class AutorFormRequest {
 
     @NotNull @NotEmpty @NotBlank
     private String nome;
 
     @NotNull @NotEmpty @NotBlank @Email
+    @UniqueValue(classDomain = Autor.class, attributeName = "email")
     private String email;
 
     @NotNull @NotEmpty @NotBlank
     @Length(max = 400)
     private String descricao;
 
-    public AutorFormRequest(@NotBlank String nome,
-                            @NotBlank @Email String email,
-                            @NotBlank @Length(max = 400) String descricao) {
+    public AutorFormRequest(@NotNull @NotEmpty @NotBlank String nome,
+                            @NotNull @NotEmpty @NotBlank @Email String email,
+                            @NotNull @NotEmpty @NotBlank @Length(max = 400) String descricao) {
         super();
         this.nome = nome;
         this.email = email;

@@ -1,5 +1,6 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.form;
 
+import br.com.zupacademy.osmarjunior.casadocodigo.constraint.UniqueValue;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Categoria;
 
 import javax.validation.constraints.NotBlank;
@@ -10,13 +11,14 @@ public class CategoriaFormRequest {
     @NotNull
     @NotEmpty
     @NotBlank
+    @UniqueValue(classDomain = Categoria.class, attributeName = "nome")
     private String nome;
 
     @Deprecated
     public CategoriaFormRequest() {
     }
 
-    public CategoriaFormRequest(@NotBlank String nome) {
+    public CategoriaFormRequest(@NotNull @NotBlank @NotEmpty String nome) {
         this.nome = nome;
     }
 
