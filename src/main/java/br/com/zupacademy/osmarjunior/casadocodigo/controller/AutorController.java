@@ -4,7 +4,7 @@ import br.com.zupacademy.osmarjunior.casadocodigo.dto.AutorDto;
 import br.com.zupacademy.osmarjunior.casadocodigo.form.AutorFormRequest;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Autor;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.AutorRepository;
-import br.com.zupacademy.osmarjunior.casadocodigo.validation.NaoPermiteEmailDuplicadoValidator;
+import br.com.zupacademy.osmarjunior.casadocodigo.validator.NaoPermiteEmailDuplicadoValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
