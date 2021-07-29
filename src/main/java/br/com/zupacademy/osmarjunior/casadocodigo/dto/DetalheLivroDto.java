@@ -2,7 +2,7 @@ package br.com.zupacademy.osmarjunior.casadocodigo.dto;
 
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Livro;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DetalheLivroDto {
 
@@ -12,9 +12,8 @@ public class DetalheLivroDto {
     private BigDecimal preco;
     private Integer numeroDePaginas;
     private String isbn;
-    private String autor;
-    private String descricaoAutor;
-    private LocalDate dataLancamento;
+    private String dataLancamento;
+    private DetalheAutorDto autor;
 
 
     public DetalheLivroDto(Livro livro) {
@@ -24,10 +23,10 @@ public class DetalheLivroDto {
         this.preco = livro.getPreco();
         this.numeroDePaginas = livro.getNumeroDePaginas();
         this.isbn = livro.getIsbn();
-        this.dataLancamento = livro.getDataLancamento();
+        this.dataLancamento = livro.getDataLancamento().format(
+                DateTimeFormatter.ofPattern("dd-MM-yyyy"));
 
-        this.autor = livro.getAutor().getNome();
-        this.descricaoAutor = livro.getAutor().getDescricao();
+        this.autor = new DetalheAutorDto(livro.getAutor());
     }
 
     public String getTitulo() {
@@ -54,15 +53,11 @@ public class DetalheLivroDto {
         return isbn;
     }
 
-    public LocalDate getDataLancamento() {
+    public String getDataLancamento() {
         return dataLancamento;
     }
 
-    public String getAutor() {
+    public DetalheAutorDto getAutor() {
         return autor;
-    }
-
-    public String getDescricaoAutor() {
-        return descricaoAutor;
     }
 }
