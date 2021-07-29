@@ -1,66 +1,30 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.dto;
 
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Livro;
-import java.math.BigDecimal;
-import java.time.LocalDate;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class LivroDto {
 
+    private Long id;
     private String titulo;
-    private String resumo;
-    private String sumario;
-    private BigDecimal preco;
-    private Integer numeroDePaginas;
-    private String isbn;
-    private LocalDate dataLancamento;
-    private String categoria;
-    private String autor;
 
     public LivroDto(Livro livro) {
+        this.id = livro.getId();
         this.titulo = livro.getTitulo();
-        this.resumo = livro.getResumo();
-        this.sumario = livro.getSumario();
-        this.preco = livro.getPreco();
-        this.numeroDePaginas = livro.getNumeroDePaginas();
-        this.isbn = livro.getIsbn();
-        this.dataLancamento = livro.getDataLancamento();
-        this.categoria = livro.getAutor().getNome();
-        this.autor = livro.getCategoria().getNome();
+    }
+
+    public static List<LivroDto> conveterToDto(List<Livro> livros) {
+        return livros.stream().map(LivroDto::new).collect(Collectors.toList());
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getTitulo() {
         return titulo;
     }
 
-    public String getResumo() {
-        return resumo;
-    }
-
-    public String getSumario() {
-        return sumario;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public Integer getNumeroDePaginas() {
-        return numeroDePaginas;
-    }
-
-    public String getIsbn() {
-        return isbn;
-    }
-
-    public LocalDate getDataLancamento() {
-        return dataLancamento;
-    }
-
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public String getAutor() {
-        return autor;
-    }
 }

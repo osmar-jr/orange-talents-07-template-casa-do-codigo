@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/livros")
@@ -33,5 +34,13 @@ public class LivroController {
         Livro livro = livroFormRequest.convertToModel(autorRepository, categoriaRepository);
         livroRepository.save(livro);
         return ResponseEntity.ok(new LivroDto(livro));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<LivroDto>> exibirLivros(){
+        List<Livro> livros = livroRepository.findAll();
+
+        List<LivroDto> livroDtos = LivroDto.conveterToDto(livros);
+        return ResponseEntity.ok(livroDtos);
     }
 }
