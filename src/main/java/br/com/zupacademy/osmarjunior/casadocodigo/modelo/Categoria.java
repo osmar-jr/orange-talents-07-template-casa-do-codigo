@@ -22,8 +22,12 @@ public class Categoria {
     public Categoria() {
     }
 
-    public Categoria(String nome) {
+    public Categoria(@NotBlank String nome) {
         this.nome = nome;
+    }
+
+    public String getNome() {
+        return nome;
     }
 
     @Override

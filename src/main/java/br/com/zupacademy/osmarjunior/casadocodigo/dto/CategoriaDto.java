@@ -6,8 +6,8 @@ public class CategoriaDto {
 
     private String nome;
 
-    public CategoriaDto(String nome) {
-        this.nome = nome;
+    public CategoriaDto(Categoria categoria) {
+        this.nome = categoria.getNome();
     }
 
     public String getNome() {

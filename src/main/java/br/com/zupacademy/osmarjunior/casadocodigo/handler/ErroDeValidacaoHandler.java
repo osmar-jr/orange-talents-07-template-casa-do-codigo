@@ -1,6 +1,5 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.handler;
 
-import br.com.zupacademy.osmarjunior.casadocodigo.dto.SaidaDeErroDeCampoDto;
 import br.com.zupacademy.osmarjunior.casadocodigo.dto.SaidaDeErrosDeValidacaoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestControllerAdvice
