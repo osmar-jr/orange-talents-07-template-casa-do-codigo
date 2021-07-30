@@ -1,5 +1,6 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.form;
 
+import br.com.zupacademy.osmarjunior.casadocodigo.constraint.UniqueValue;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Estado;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Pais;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.EstadoRepository;

@@ -6,9 +6,7 @@ import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Pais;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.EstadoRepository;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
@@ -36,8 +34,12 @@ public class NaoPermiteEstadoDuplicadoEmUmPaisValidator implements Validator {
         }
 
         EstadoFormRequest request = (EstadoFormRequest) target;
+        if(request.getPaisId() == null){
+            return;
+        }
 
         Optional<Pais> optionalPais = paisRepository.findById(request.getPaisId());
+
         if(optionalPais.isEmpty()){
             errors.rejectValue("paisId", null, "País com ID: "
                     + request.getPaisId() + " não existe no banco de dados.");

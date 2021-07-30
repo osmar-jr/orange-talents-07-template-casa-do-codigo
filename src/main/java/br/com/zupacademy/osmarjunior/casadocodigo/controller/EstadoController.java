@@ -5,6 +5,7 @@ import br.com.zupacademy.osmarjunior.casadocodigo.form.EstadoFormRequest;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Estado;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.EstadoRepository;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.PaisRepository;
+import br.com.zupacademy.osmarjunior.casadocodigo.validator.NaoPermiteEstadoDuplicadoComPaisNuloValidator;
 import br.com.zupacademy.osmarjunior.casadocodigo.validator.NaoPermiteEstadoDuplicadoEmUmPaisValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -27,9 +28,13 @@ public class EstadoController {
     @Autowired
     private NaoPermiteEstadoDuplicadoEmUmPaisValidator naoPermiteEstadoDuplicadoEmUmPais;
 
+    @Autowired
+    private NaoPermiteEstadoDuplicadoComPaisNuloValidator naoPermiteEstadoDuplicadoComPaisNuloValidator;
+
     @InitBinder
     public void init(WebDataBinder webDataBinder){
         webDataBinder.addValidators(naoPermiteEstadoDuplicadoEmUmPais);
+        webDataBinder.addValidators(naoPermiteEstadoDuplicadoComPaisNuloValidator);
     }
 
     @PostMapping
