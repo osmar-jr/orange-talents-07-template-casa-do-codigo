@@ -1,6 +1,6 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.validator;
 
-import br.com.zupacademy.osmarjunior.casadocodigo.constraint.ExistsId;
+import br.com.zupacademy.osmarjunior.casadocodigo.annotation.ExistsId;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;

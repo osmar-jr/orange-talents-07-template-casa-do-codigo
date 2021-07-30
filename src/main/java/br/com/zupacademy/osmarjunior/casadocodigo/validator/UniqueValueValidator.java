@@ -1,6 +1,6 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.validator;
 
-import br.com.zupacademy.osmarjunior.casadocodigo.constraint.UniqueValue;
+import br.com.zupacademy.osmarjunior.casadocodigo.annotation.UniqueValue;
 import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;

@@ -1,4 +1,4 @@
-package br.com.zupacademy.osmarjunior.casadocodigo.constraint;
+package br.com.zupacademy.osmarjunior.casadocodigo.annotation;
 
 
 import br.com.zupacademy.osmarjunior.casadocodigo.validator.UniqueValueValidator;

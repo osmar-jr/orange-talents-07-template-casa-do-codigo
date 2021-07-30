@@ -1,6 +1,6 @@
 package br.com.zupacademy.osmarjunior.casadocodigo.form;
 
-import br.com.zupacademy.osmarjunior.casadocodigo.constraint.UniqueValue;
+import br.com.zupacademy.osmarjunior.casadocodigo.annotation.UniqueValue;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Pais;
 
 import javax.validation.constraints.NotBlank;
