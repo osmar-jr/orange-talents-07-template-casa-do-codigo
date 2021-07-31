@@ -9,12 +9,8 @@ import br.com.zupacademy.osmarjunior.casadocodigo.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 import java.util.Optional;
 
 public class EstadoPertenceAoPaisValidator implements ConstraintValidator<EstadoIsInPais, ClienteFormRequest> {
@@ -42,7 +38,9 @@ public class EstadoPertenceAoPaisValidator implements ConstraintValidator<Estado
 
         Pais pais = optionalPais.get();
         Optional<Estado> optionalEstado = estadoRepository.findByIdAndPais(clienteFormRequest.getEstadoId(), pais);
-        Assert.state(optionalEstado.isPresent(), "Estado ID: " + clienteFormRequest.getEstadoId() + " não pertence ao país ID: " + pais.getId() );
+
+        Assert.state(optionalEstado.isPresent(), "Estado ID: "
+                + clienteFormRequest.getEstadoId() + " não pertence ao país ID: " + pais.getId() );
 
         return false;
     }

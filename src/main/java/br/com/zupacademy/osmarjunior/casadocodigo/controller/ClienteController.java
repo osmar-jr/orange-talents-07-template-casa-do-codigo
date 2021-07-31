@@ -5,6 +5,7 @@ import br.com.zupacademy.osmarjunior.casadocodigo.form.ClienteFormRequest;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Cliente;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.ClienteRepository;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.EstadoRepository;
+import br.com.zupacademy.osmarjunior.casadocodigo.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,13 +28,13 @@ public class ClienteController {
     @Autowired
     EstadoRepository estadoRepository;
 
-    @PersistenceContext
-    EntityManager entityManager;
+    @Autowired
+    PaisRepository paisRepository;
 
     @PostMapping
     @Transactional
     public ResponseEntity<ClienteDto> cadastrarCliente(@RequestBody @Valid ClienteFormRequest clienteFormRequest){
-        Cliente cliente = clienteFormRequest.converterToModel(entityManager, estadoRepository);
+        Cliente cliente = clienteFormRequest.converterToModel(paisRepository, estadoRepository);
         clienteRepository.save(cliente);
 
         return ResponseEntity.ok(ClienteDto.toClienteDto(cliente));

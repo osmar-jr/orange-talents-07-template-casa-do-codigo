@@ -8,9 +8,9 @@ import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Cliente;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Estado;
 import br.com.zupacademy.osmarjunior.casadocodigo.modelo.Pais;
 import br.com.zupacademy.osmarjunior.casadocodigo.repository.EstadoRepository;
+import br.com.zupacademy.osmarjunior.casadocodigo.repository.PaisRepository;
 import org.springframework.util.Assert;
 
-import javax.persistence.EntityManager;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -136,10 +136,12 @@ public class ClienteFormRequest {
         this.estadoId = estadoId;
     }
 
-    public Cliente converterToModel(EntityManager entityManager, EstadoRepository estadoRepository) {
+    public Cliente converterToModel(PaisRepository paisRepository, EstadoRepository estadoRepository) {
 
-        Pais pais = entityManager.find(Pais.class, paisId);
-        Assert.state(pais != null, "País informado não existe.");
+        Optional<Pais> optionalPais = paisRepository.findById(paisId);
+        Assert.state(optionalPais.isPresent(), "País informado não existe.");
+
+        Pais pais = optionalPais.get();
 
         if (estadoId == null) {
             return new Cliente(this.nome, this.email, this.sobrenome,
@@ -147,7 +149,8 @@ public class ClienteFormRequest {
         }
 
         Optional<Estado> optionalEstado = estadoRepository.findByIdAndPais(estadoId, pais);
-        Assert.state(optionalEstado.isPresent(), "Estado não pertence ao país ID: " + pais.getId() );
+        Assert.state(optionalEstado.isPresent(), "Estado não pertence ao país ID: "
+                + pais.getId() );
 
         Estado estado = optionalEstado.get();
 
